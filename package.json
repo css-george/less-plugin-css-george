@@ -1,0 +1,11 @@
+{
+  "name": "less-plugin-css-george",
+  "version": "1.0.0",
+  "description": "A plugin for Less to allow runtime manipulation of variables.",
+  "main": "lib/index.js",
+  "author": "Darryl Pogue <darryl@dpogue.ca>",
+  "license": "MIT",
+  "peerDependencies": {
+    "less": "^2.7.2"
+  }
+}
