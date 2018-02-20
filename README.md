@@ -58,6 +58,31 @@ Example:
 lessc --css-george ./src/less/main.less ./www/css/style.css
 ```
 
+In Less 3, you can also load the plugin with the `@plugin` directive in your
+less file:
+
+```
+@plugin 'css-george';
+```
+
+
+### Compiling with Hardcoded Fallback values
+
+For browsers that don't support native CSS variables, you can tell the
+css-george plugin to export a property twice: once with the original value
+hardcoded, and again with the custom property. Be aware that this may cause
+sourcemaps to become inaccurate.
+
+```
+lessc --css-george="fallback=true" ./src/less/main.less ./www/css/style.css
+```
+
+In Less 3, you can also specify this via the `@plugin` directive:
+
+```
+@plugin (fallback=true) 'css-george';
+```
+
 
 Known Limitations
 -----------------
@@ -75,11 +100,9 @@ Known Limitations
   * Chrome 49+
   * Firefox 31+
   * Safari 9.1+
-  * Edge 15+ (to be released in early 2017)
+  * Edge 15+
   * iOS 9.3+
   * Android 5.0+
-
-  There is currently **no fallback** to safe values for older browsers.
 
 * Colours must be defined in hexadecimal notation for the colour picker widget
   in the CSS George editor to work.  Non hexadecimal colours will be editable
