@@ -8,6 +8,7 @@
     "Sam Evanuk <samevanuk@gmail.com>"
   ],
   "license": "MIT",
+  "repository": "github:css-george/less-plugin-css-george",
   "peerDependencies": {
     "less": "^2.7.2 || ^3.0.0"
   },
