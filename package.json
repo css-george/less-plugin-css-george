@@ -2,17 +2,39 @@
   "name": "less-plugin-css-george",
   "version": "2.0.1",
   "description": "A plugin for Less to allow runtime manipulation of variables.",
-  "main": "lib/index.js",
+  "main": "index.js",
   "author": "Darryl Pogue <darryl@dpogue.ca>",
   "contributors": [
     "Sam Evanuk <samevanuk@gmail.com>"
   ],
   "license": "MIT",
   "repository": "github:css-george/less-plugin-css-george",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "css",
+    "lesscss",
+    "less-plugin",
+    "lesscss-plugin",
+    "css-george",
+    "css variables"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "test": "tap test/*.js",
+    "preversion": "npm run lint && npm test",
+    "postversion": "git push && git push --tags"
+  },
   "peerDependencies": {
-    "less": "^2.7.2 || ^3.0.0"
+    "less": "^2.7.2 || ^3.0.0 || ^4.0.0"
   },
   "devDependencies": {
-    "less": "^3.11.1"
+    "eslint": "^7.19.0",
+    "less": "^4.1.1",
+    "tap": "^14.11.0"
+  },
+  "tap": {
+    "reporter": "spec"
   }
 }

@@ -23,8 +23,13 @@ class GeorgeVisitor {
         this._fallbackValues = map;
     }
 
-    get isReplacing() { return true; }
-    get isPreEvalVisitor() { return true; }
+    get isReplacing() {
+        return true;
+    }
+
+    get isPreEvalVisitor() {
+        return true;
+    }
 
     run(root) {
         return this._visitor.visit(root);
@@ -46,12 +51,12 @@ class GeorgeVisitor {
 
     visitDeclaration(node, visitArgs, type=this._less.tree.Declaration) {
         if (node.variable && this._exportNext) {
-            let varName = node.name.substring(1);
+            const varName = node.name.substring(1);
 
             this._fallbackValues.set(varName, node.value);
             this._exportNext = false;
 
-            let call = new this._less.tree.Call("var", [new this._less.tree.Keyword('--' + varName), node.value], getIndex(node), currentFileInfo(node));
+            const call = new this._less.tree.Call("var", [new this._less.tree.Keyword('--' + varName), node.value], getIndex(node), currentFileInfo(node));
             return new type(node.name, call, node.important, node.merge, getIndex(node), currentFileInfo(node), node.inline);
         }
 
@@ -67,23 +72,22 @@ module.exports = class CSSGeorgePlugin {
 
 
     install(less, pluginManager) {
-        let exports = new Map();
-        let values = Object.create(null);
+        const exports = new Map();
+        const values = Object.create(null);
 
         pluginManager.addVisitor(new GeorgeVisitor(less, exports));
 
         less.functions.functionRegistry.add('var', function(...args) {
-            let [name, value] = args.map(_ => _.value);
+            const [name, value] = args.map(_ => _.toCSS());
 
             if (exports.has(name.substring(2)) >= 0) {
                 values[name.substring(2)] = value;
             }
         });
 
-
         pluginManager.addPostProcessor({
             process: (css, opts) => {
-                let b64Map = new Buffer(JSON.stringify(values)).toString('base64');
+                const b64Map = Buffer.from(JSON.stringify(values)).toString('base64');
 
                 if (this.options.fallback) {
                     css = css.replace(/^.*var\(.*\).*$/mg, function(line) {
@@ -111,10 +115,10 @@ module.exports = class CSSGeorgePlugin {
 
     setOptions(options) {
         this.options = {};
-        let pairs = options.split(',');
+        const pairs = options.split(',');
 
         pairs.forEach(flag => {
-            let [name, value] = flag.split('=');
+            const [name, value] = flag.split('=');
             this.options[name] = value === 'true';
         });
     }
