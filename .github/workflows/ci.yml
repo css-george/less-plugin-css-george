@@ -13,13 +13,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
-
-      - run: git checkout HEAD^2
-        if: ${{ github.event_name == 'pull_request' }}
+      - uses: actions/checkout@v2
 
       - name: Use Node.js latest
         uses: actions/setup-node@v2
