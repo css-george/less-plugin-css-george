@@ -80,7 +80,7 @@ module.exports = class CSSGeorgePlugin {
         less.functions.functionRegistry.add('var', function(...args) {
             const [name, value] = args.map(_ => _.toCSS());
 
-            if (exports.has(name.substring(2)) >= 0) {
+            if (exports.has(name.substring(2))) {
                 values[name.substring(2)] = value;
             }
         });
@@ -103,6 +103,7 @@ module.exports = class CSSGeorgePlugin {
     }
 
 
+    /* istanbul ignore next: help/usage output */
     printUsage() {
         console.log('');
         console.log('CSS George Plugin');
@@ -115,7 +116,7 @@ module.exports = class CSSGeorgePlugin {
 
     setOptions(options) {
         this.options = {};
-        const pairs = options.split(',');
+        const pairs = (options && options.split(',')) || [];
 
         pairs.forEach(flag => {
             const [name, value] = flag.split('=');
