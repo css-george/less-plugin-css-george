@@ -37,7 +37,7 @@
     "less2": "npm:less@^2.7.2",
     "less3": "npm:less@^3.0.0",
     "less4": "npm:less@^4.0.0",
-    "tap": "^14.11.0"
+    "tap": "^15.0.9"
   },
   "tap": {
     "check-coverage": true,
