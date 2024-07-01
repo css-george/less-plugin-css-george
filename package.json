@@ -33,7 +33,7 @@
     "less": "^2.7.2 || ^3.0.0 || ^4.0.0"
   },
   "devDependencies": {
-    "eslint": "^8.0.0",
+    "eslint": "^9.6.0",
     "less2": "npm:less@^2.7.2",
     "less3": "npm:less@^3.0.0",
     "less4": "npm:less@^4.0.0",
