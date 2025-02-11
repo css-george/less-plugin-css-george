@@ -21,7 +21,7 @@
     "css variables"
   ],
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint",
     "test": "tap test/*.js",
     "preversion": "npm run lint && npm test",
     "postversion": "git push && git push --tags"
