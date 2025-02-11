@@ -103,7 +103,7 @@ module.exports = class CSSGeorgePlugin {
     }
 
 
-    /* istanbul ignore next: help/usage output */
+    /* node:coverage ignore next 8 */ // help/usage output
     printUsage() {
         console.log('');
         console.log('CSS George Plugin');
