@@ -1,18 +1,16 @@
-const test = require('tap').test;
+const test = require('node:test');
 const plugin = require('../index.js');
 
 test('setOptions', function(t) {
     const george = new plugin();
-    t.ok(Object.keys(george.options).length === 0, 'has no options');
+    t.assert.equal(Object.keys(george.options).length, 0, 'has no options');
 
     george.setOptions();
-    t.ok(Object.keys(george.options).length === 0, 'sets no options');
+    t.assert.equal(Object.keys(george.options).length, 0, 'sets no options');
 
     george.setOptions('fallback=true,fakeoption=false');
-    t.ok(george.options.fallback === true, 'sets a truthy option');
-    t.ok(george.options.fakeoption === false, 'sets a falsy option');
-
-    t.end();
+    t.assert.equal(george.options.fallback, true, 'sets a truthy option');
+    t.assert.equal(george.options.fakeoption, false, 'sets a falsy option');
 });
 
 function runOutputTests(less) {
@@ -43,24 +41,23 @@ function runOutputTests(less) {
 
 
 
-    test(`less v${less.version.join('.')}`, function(wrapper) {
-        wrapper.test('simple annotation', async function(t) {
+    test(`less v${less.version.join('.')}`, async function(wrapper) {
+        await wrapper.test('simple annotation', async function(t) {
             const input = `
                 /* @export */ @variable: blue;
             `;
 
             const result = await process(input);
 
-            t.ok(result.match(/georgeMappingURL=\S+/), 'has a mapping URL');
+            t.assert.match(result, /georgeMappingURL=\S+/, 'has a mapping URL');
 
             const mapping = parseMapping(result);
 
-            t.ok(mapping['variable'] === 'blue', 'maps the exported variable');
-            t.end();
+            t.assert.equal(mapping['variable'], 'blue', 'maps the exported variable');
         });
 
 
-        wrapper.test('multiple variables', async function(t) {
+        await wrapper.test('multiple variables', async function(t) {
             const input = `
                 @not-exported: none;
                 /* @export */ @variable: blue;
@@ -78,15 +75,14 @@ function runOutputTests(less) {
 
             const mapping = await processAndParse(input);
 
-            t.ok(Object.keys(mapping).length === 2, 'has the right number of exported variables');
-            t.ok(!mapping.hasOwnProperty('not-exported'), 'excludes non-exported variables');
-            t.ok(!mapping.hasOwnProperty('foo'), 'excludes non-less variables');
-            t.ok(mapping['div-color'] === 'red', 'includes all exported variables');
-            t.end();
+            t.assert.equal(Object.keys(mapping).length, 2, 'has the right number of exported variables');
+            t.assert.ok(!mapping.hasOwnProperty('not-exported'), 'excludes non-exported variables');
+            t.assert.ok(!mapping.hasOwnProperty('foo'), 'excludes non-less variables');
+            t.assert.equal(mapping['div-color'], 'red', 'includes all exported variables');
         });
 
 
-        wrapper.test('fallback support', async function(t) {
+        await wrapper.test('fallback support', async function(t) {
             const input = `
                 /* @export */ @variable: blue;
 
@@ -97,12 +93,9 @@ function runOutputTests(less) {
 
             const result = await process(input, { fallback: true });
 
-            t.ok(result.match(/color:\s*blue/), 'includes fallback value');
-            t.ok(result.match(/color:\s*var\(/), 'includes variable value');
-            t.end();
+            t.assert.match(result, /color:\s*blue/, 'includes fallback value');
+            t.assert.match(result, /color:\s*var\(/, 'includes variable value');
         });
-
-        wrapper.end();
     });
 }
 
